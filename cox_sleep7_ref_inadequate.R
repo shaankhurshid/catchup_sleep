@@ -7,7 +7,7 @@ library(survival)
 library(polspline)
 
 # Index of file names
-list <- paste0('~/test/projects/skhurshid/accel_phewas/newer_phecode_tables/',list.files('~/test/projects/skhurshid/accel_phewas/newer_phecode_tables'))
+list <- paste0('~/test/projects/skhurshid/accel_phewas/phecode_tables_202401/',list.files('~/test/projects/skhurshid/accel_phewas/phecode_tables_202401'))
 
 # Load exposure/covariate data
 sleep <- fread('/mnt/ml4cvd/projects/skhurshid/catchup_sleep/catchup_sleep_seed_120324.csv')
