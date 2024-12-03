@@ -45,7 +45,7 @@ for (i in list[1:10]){
     hr_sleep <- NA; lower_sleep <- NA; upper_sleep <- NA; z_sleep <- NA; p_sleep <- NA
     result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,
                          hr_catchup,lower_catchup,upper_catchup,chisq_catchup,p_catchup,
-                         hr_regular,lower_regular,upper_regular,chisq_regular,p_regular)    out <- rbind(out,result)
+                         hr_regular,lower_regular,upper_regular,chisq_regular,p_regular)
     print(paste0("Skipping phenotype ",analysis_set$disease[1]," since < 10 cases"))
     if (n %% 50 == 0){print(paste0("Just finished model ",n," out of ",length(list),"!"))}
     n <- n+1; next}
