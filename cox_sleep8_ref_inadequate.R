@@ -20,7 +20,7 @@ for (j in (c('accel_date','phenotype_censor_date'))){set(sleep,j=j,value=as.Date
 out <- data.table(); n <- 1
 
 # Set levels
-sleep[,sleep_group7 := factor(sleep_group7,levels=c('Inadequate','Catchup','Regular'))]
+sleep[,sleep_group8 := factor(sleep_group8,levels=c('Inadequate','Catchup','Regular'))]
 
 # Looping cox model
 for (i in list){
@@ -50,7 +50,7 @@ for (i in list){
     if (n %% 50 == 0){print(paste0("Just finished model ",n," out of ",length(list),"!"))}
     n <- n+1; next}
   # Fit cox model
-  model <- coxph(Surv(time_to_event,has_disease) ~ sleep_group7 + accel_age + sex + race +
+  model <- coxph(Surv(time_to_event,has_disease) ~ sleep_group8 + accel_age + sex + race +
                    tob + etoh + tdi + employment_status + self_health + diet + qual_ea + pspline(mvpa_daily_total,df=0), data=analysis_set)
   
   hr_catchup <- exp(model$coefficients[1]); lower_catchup <- exp(confint(model)[1,1])
@@ -70,4 +70,4 @@ for (i in list){
 }
 
 # Save out
-write.csv(out,file='/mnt/ml4cvd/projects/skhurshid/catchup_sleep/cox_sleep7_ref_inadequate.csv',row.names=F)
+write.csv(out,file='/mnt/ml4cvd/projects/skhurshid/catchup_sleep/cox_sleep8_ref_inadequate.csv',row.names=F)
