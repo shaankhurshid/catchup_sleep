@@ -43,20 +43,27 @@ for (i in list[1:10]){
   # If less than 10 cases, abort
   if (n_events < 10){
     hr_sleep <- NA; lower_sleep <- NA; upper_sleep <- NA; z_sleep <- NA; p_sleep <- NA
-    result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,hr_sleep,lower_sleep,upper_sleep,chisq_sleep,p_sleep)
-    out <- rbind(out,result)
+    result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,
+                         hr_catchup,lower_catchup,upper_catchup,chisq_catchup,p_catchup,
+                         hr_regular,lower_regular,upper_regular,chisq_regular,p_regular)    out <- rbind(out,result)
     print(paste0("Skipping phenotype ",analysis_set$disease[1]," since < 10 cases"))
     if (n %% 50 == 0){print(paste0("Just finished model ",n," out of ",length(list),"!"))}
     n <- n+1; next}
   # Fit cox model
   model <- coxph(Surv(time_to_event,has_disease) ~ sleep_group7 + accel_age + sex + race +
-                   tob + etoh + tdi + employment_status + self_health + diet + qual_ea, data=analysis_set)
+                   tob + etoh + tdi + employment_status + self_health + diet + qual_ea + pspline(mvpa_daily_total,df=0), data=analysis_set)
   
-  hr_sleep <- exp(model$coefficients[1]); lower_sleep <- exp(confint(model)[1,1])
-  upper_sleep <- exp(confint(model)[1,2]); chisq_sleep <- summary(model)$coefficients[1,4]
-  p_sleep <- summary(model)$coefficients[1,6]
+  hr_catchup <- exp(model$coefficients[1]); lower_catchup <- exp(confint(model)[1,1])
+  upper_catchup <- exp(confint(model)[1,2]); chisq_catchup <- summary(model)$coefficients[1,4]
+  p_catchup <- summary(model)$coefficients[1,6]
   
-  result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,hr_sleep,lower_sleep,upper_sleep,chisq_sleep,p_sleep)
+  hr_regular <- exp(model$coefficients[2]); lower_regular <- exp(confint(model)[2,1])
+  upper_regular <- exp(confint(model)[2,2]); chisq_regular <- summary(model)$coefficients[2,4]
+  p_regular <- summary(model)$coefficients[2,6]
+  
+  result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,
+                       hr_catchup,lower_catchup,upper_catchup,chisq_catchup,p_catchup,
+                       hr_regular,lower_regular,upper_regular,chisq_regular,p_regular)
   out <- rbind(out,result)
   if (n %% 50 == 0){print(paste0("Just finished model ",n," out of ",length(list),"!"))}
   n <- n+1
