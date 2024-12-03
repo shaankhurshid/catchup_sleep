@@ -22,7 +22,7 @@ censor_data[data,':='(sleep_group7 = i.sleep_group7, sleep_group8 = i.sleep_grou
                     accel_age = i.age_accel, sex = i.sex, race = i.race_category_adjust, tob = i.tob,
                     etoh = i.etoh_grams, tdi = i.tdi, employment_status = i.employment_status, 
                     self_health = i.self_health, diet = i.diet, qual_ea = i.qual_ea, accel_date = i.end_date,
-                    mvpa_daily_total = i.mvpa_daily_total)]
+                    mvpa_daily_total = i.mvpa_daily_total,sleep_daily_total = i.sleep_daily_total)]
 
 # Load withdrawals
 withdrawals <- fread(file='/Volumes/medpop_afib/skhurshid/phenotypes/withdrawals/w7089_20230821.csv')
@@ -57,7 +57,7 @@ censor_data <- censor_data[!(sample_id %in% withdrawals$V1)] #89573 - 0 = 89573
 seed <- censor_data[,c('sample_id','accel_age','accel_date',
                      'sex','race','tob','etoh','tdi','employment_status',
                      'self_health','diet','qual_ea','phenotype_censor_date',
-                     'sleep_group7','sleep_group8','mvpa_daily_total')]
+                     'sleep_group7','sleep_group8','mvpa_daily_total','sleep_daily_total')]
 
 # Write out 
 write.csv(seed,file='/Volumes/medpop_afib/skhurshid/catchup_sleep/catchup_sleep_seed_120324.csv',row.names = F)
