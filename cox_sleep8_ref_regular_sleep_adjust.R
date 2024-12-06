@@ -41,7 +41,7 @@ for (i in list){
   n_events <- nrow(analysis_set[has_disease==1])
   fu_median <- quantile(analysis_set$time_to_event,0.50); fu_q1 <- quantile(analysis_set$time_to_event,0.25); fu_q3 <- quantile(analysis_set$time_to_event,0.75)
   # If less than 10 cases, abort
-  if (n_events < 10){
+  if (n_events < 120){
     hr_sleep <- NA; lower_sleep <- NA; upper_sleep <- NA; z_sleep <- NA; p_sleep <- NA
     result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,
                          hr_catchup,lower_catchup,upper_catchup,chisq_catchup,p_catchup)
