@@ -61,3 +61,10 @@ seed <- censor_data[,c('sample_id','accel_age','accel_date',
 
 # Write out 
 write.csv(seed,file='/Volumes/medpop_afib/skhurshid/catchup_sleep/catchup_sleep_seed_120324.csv',row.names = F)
+
+### ADD BLANKING PERIOD SENSITIVITY ANALYSIS
+# Create blanked date (2 years after accelerometer)
+seed[,blanked_date := accel_date + 365.25*2]
+
+# Write out
+write.csv(seed,file='/Volumes/medpop_afib/skhurshid/ww_phewas/catchup_sleep_seed_blank_2y_040525.csv',row.names = F)
