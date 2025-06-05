@@ -23,7 +23,7 @@ out <- data.table(); n <- 1
 sleep[,sleep_group7 := factor(sleep_group7,levels=c('Regular','Catchup','Inadequate'))]
 
 # Looping cox model
-for (i in list[1:10]){
+for (i in list){
   # Merge
   phecode <- NULL; analysis_set <- NULL
   phecode <- read.table(i,sep='\t',header = TRUE); setDT(phecode)
