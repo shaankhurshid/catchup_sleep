@@ -41,7 +41,7 @@ for (i in list){
   n_events <- nrow(analysis_set[has_disease==1])
   fu_median <- quantile(analysis_set$time_to_event,0.50); fu_q1 <- quantile(analysis_set$time_to_event,0.25); fu_q3 <- quantile(analysis_set$time_to_event,0.75)
   # If less than 10 cases, abort
-  if (n_events < 119){
+  if (n_events < 10){
     hr_sleep <- NA; lower_sleep <- NA; upper_sleep <- NA; z_sleep <- NA; p_sleep <- NA
     result <- data.table(disease,n_events,fu_median,fu_q1,fu_q3,
                          hr_catchup,lower_catchup,upper_catchup,chisq_catchup,p_catchup)
@@ -51,7 +51,7 @@ for (i in list){
   # Fit cox model
   model <- coxph(Surv(time_to_event,has_disease) ~ sleep_group7 + accel_age + sex + race +
                    tob + etoh + tdi + employment_status + self_health + diet + qual_ea + pspline(mvpa_daily_total,df=0)
-                   + pspline(sleep_daily_total,mvpa=0), data=analysis_set)
+                   + pspline(sleep_daily_total,df=0), data=analysis_set)
   
   hr_catchup <- exp(model$coefficients[1]); lower_catchup <- exp(confint(model)[1,1])
   upper_catchup <- exp(confint(model)[1,2]); chisq_catchup <- summary(model)$coefficients[1,4]
