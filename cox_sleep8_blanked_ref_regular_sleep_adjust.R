@@ -51,7 +51,7 @@ for (i in list){
   # Fit cox model
   model <- coxph(Surv(time_to_event,has_disease) ~ sleep_group7 + accel_age + sex + race +
                    tob + etoh + tdi + employment_status + self_health + diet + qual_ea + pspline(mvpa_daily_total,df=0)
-                   + pspline(sleep_daily_total,mvpa=0), data=analysis_set)
+                   + pspline(sleep_daily_total,df=0), data=analysis_set)
   
   hr_catchup <- exp(model$coefficients[1]); lower_catchup <- exp(confint(model)[1,1])
   upper_catchup <- exp(confint(model)[1,2]); chisq_catchup <- summary(model)$coefficients[1,4]
